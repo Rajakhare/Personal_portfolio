@@ -4,26 +4,26 @@
 }
 
 .skills-container {
-  max-width: 1100px;
+  max-width: 1120px;
   margin: 0 auto;
 }
 
 .skills-header {
-  margin-bottom: 56px;
+  margin-bottom: 48px;
 }
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
 }
 
 .skill-category-card {
-  background: var(--glass);
+  background: var(--surface);
   border: 1px solid var(--glass-border);
   border-radius: 16px;
   padding: 28px;
-  transition: all 0.3s ease;
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
   position: relative;
   overflow: hidden;
 }
@@ -37,13 +37,13 @@
   height: 2px;
   background: linear-gradient(90deg, var(--accent), var(--accent-light));
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.25s ease;
 }
 
 .skill-category-card:hover {
-  border-color: rgba(124, 58, 237, 0.3);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px var(--accent-glow);
+  border-color: rgba(124, 58, 237, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
 }
 
 .skill-category-card:hover::before {
@@ -51,20 +51,20 @@
 }
 
 .skill-category-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
   margin-bottom: 20px;
 }
 
-.skill-icon {
-  font-size: 22px;
-}
-
 .skill-category-title {
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 700;
   color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.skill-category-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
 }
 
 .skill-tags {
@@ -75,24 +75,32 @@
 
 .skill-tag {
   background: var(--accent-subtle);
-  border: 1px solid rgba(124, 58, 237, 0.15);
+  border: 1px solid rgba(124, 58, 237, 0.2);
   color: var(--accent-light);
   font-size: 12px;
   font-family: 'Fira Code', monospace;
-  padding: 5px 12px;
+  padding: 6px 12px;
   border-radius: 6px;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .skill-tag:hover {
   background: rgba(124, 58, 237, 0.2);
-  border-color: rgba(124, 58, 237, 0.4);
+  border-color: rgba(124, 58, 237, 0.45);
 }
 
-@media (max-width: 900px) {
-  .skills-grid { grid-template-columns: 1fr; }
+@media (max-width: 768px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 480px) {
-  .skills { padding: var(--space-xl) 24px; }
+  .skills {
+    padding: 60px 20px;
+  }
+
+  .skill-category-card {
+    padding: 22px;
+  }
 }

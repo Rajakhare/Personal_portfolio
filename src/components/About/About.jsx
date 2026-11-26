@@ -1,47 +1,62 @@
+import { ABOUT_CONTENT, PROFILE } from '../../data/portfolioData'
 import './About.css'
-import photo from '../../assets/portfolio_photo.png'
-
 
 const About = () => {
   return (
     <section id="about" className="about">
       <div className="about-container">
-        <div className="about-image-col">
-          <div className="about-image-wrapper">
-            <div className="about-image-placeholder">
-              <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-              <img src={photo} alt="Profile" className='about-profile-img'/>
-            </div>
-            <div className="about-image-border"></div>
-            <div className="about-badge-card">
-              <span className="about-badge-icon">⚡</span>
+        <div className="about-visual-col" aria-label="Engineering profile summary">
+          <div className="about-profile-card">
+            <div className="about-card-top">
+              <div className="about-monogram" aria-hidden="true">
+                {PROFILE.initials}
+              </div>
               <div>
-                <div className="about-badge-title">Open to Work</div>
-                <div className="about-badge-sub">Full-time & Freelance</div>
+                <div className="about-card-name">{PROFILE.name}</div>
+                <div className="about-card-role">{PROFILE.title}</div>
               </div>
             </div>
+
+            <div className="about-code-block" aria-hidden="true">
+              <div className="code-line">
+                <span className="code-key">focus</span>
+                <span className="code-sep">:</span>
+                <span className="code-val">&quot;Backend &amp; API Architecture&quot;</span>
+              </div>
+              <div className="code-line">
+                <span className="code-key">core</span>
+                <span className="code-sep">:</span>
+                <span className="code-val">[&quot;Python&quot;, &quot;FastAPI&quot;, &quot;PostgreSQL&quot;]</span>
+              </div>
+              <div className="code-line">
+                <span className="code-key">frontend</span>
+                <span className="code-sep">:</span>
+                <span className="code-val">[&quot;React&quot;, &quot;Next.js&quot;, &quot;JS&quot;]</span>
+              </div>
+            </div>
+
+            <dl className="about-snapshot-list">
+              {ABOUT_CONTENT.stackSnapshot.map((item) => (
+                <div className="about-snapshot-item" key={item.label}>
+                  <dt>{item.label}</dt>
+                  <dd>{item.value}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </div>
 
         <div className="about-text-col">
-          <div className="section-tag">// about me</div>
+          <div className="section-tag">// about</div>
           <h2 className="section-heading">
-            Crafting Digital <span>Experiences</span>
+            {ABOUT_CONTENT.headingPrefix} <span>{ABOUT_CONTENT.headingAccent}</span>
           </h2>
 
-          <p className="about-para">
-            Hi! I'm <strong>Raj Akhare</strong>, a passionate full stack developer based in
-            your city. I love building beautiful, accessible and performant web applications
-            that solve real problems.
-          </p>
-          <p className="about-para">
-            With a strong foundation in React and modern JavaScript, I enjoy turning complex
-            ideas into elegant user interfaces. When I'm not coding, you'll find me exploring
-            new technologies and contributing to open source.
-          </p>
-          <p className="about-para">
-            I believe great software is built at the intersection of clean code and thoughtful design.
-          </p>
+          {ABOUT_CONTENT.paragraphs.map((paragraph, index) => (
+            <p className="about-para" key={index}>
+              {paragraph}
+            </p>
+          ))}
         </div>
       </div>
     </section>

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
+import { NAV_LINKS, PROFILE } from '../../data/portfolioData'
 import './Navbar.css'
-import resume from '../../assets/Raj_Akhare_Fresher_BellSoft.pdf'
-
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false)
@@ -10,66 +9,86 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+      setScrolled(window.scrollY > 40)
 
-      const sections = ['home', 'about', 'skills', 'projects', 'contact']
-      const current = sections.find(section => {
-        const el = document.getElementById(section)
+      const offset = 120
+      let currentSection = NAV_LINKS[0].id
+      for (const { id } of NAV_LINKS) {
+        const el = document.getElementById(id)
         if (el) {
           const rect = el.getBoundingClientRect()
-          return rect.top <= 100 && rect.bottom >= 100
+          if (rect.top <= offset) {
+            currentSection = id
+          }
         }
-        return false
-      })
-      if (current) setActiveSection(current)
+      }
+      setActiveSection(currentSection)
     }
-    window.addEventListener('scroll', handleScroll)
+
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const navLinks = [
-    { label: 'Home', href: '#home' },
-    { label: 'About', href: '#about' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Contact', href: '#contact' },
-  ]
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && menuOpen) {
+        setMenuOpen(false)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [menuOpen])
 
   return (
-    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-      <div className="nav-container">
-        <a href="#home" className="nav-logo">
-          RA<span>.</span>
+    <header className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+      <nav className="nav-container" aria-label="Primary Navigation">
+        <a href="#home" className="nav-logo" aria-label={`${PROFILE.name} — Home`}>
+          {PROFILE.initials}
+          <span>.</span>
         </a>
 
-        <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
-          {navLinks.map(link => (
-            <li key={link.label}>
+        <ul id="primary-nav-links" className={`nav-links ${menuOpen ? 'open' : ''}`}>
+          {NAV_LINKS.map((link) => (
+            <li key={link.id}>
               <a
                 href={link.href}
-                className={activeSection === link.href.replace('#', '') ? 'active' : ''}
+                className={activeSection === link.id ? 'active' : ''}
+                aria-current={activeSection === link.id ? 'page' : undefined}
                 onClick={() => setMenuOpen(false)}
               >
                 {link.label}
               </a>
             </li>
           ))}
-          <li>
-            <a href={resume} download="Raj_Akhare_Resume.pdf" className="nav-resume-btn">Resume</a>
-          </li>
+          {PROFILE.resumeUrl && (
+            <li>
+              <a
+                href={PROFILE.resumeUrl}
+                download={PROFILE.resumeFileName}
+                className="nav-resume-btn"
+                onClick={() => setMenuOpen(false)}
+              >
+                Resume
+              </a>
+            </li>
+          )}
         </ul>
 
         <button
+          type="button"
           className={`hamburger ${menuOpen ? 'open' : ''}`}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
+          onClick={() => setMenuOpen((prev) => !prev)}
+          aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={menuOpen}
+          aria-controls="primary-nav-links"
         >
           <span></span>
           <span></span>
           <span></span>
         </button>
-      </div>
-    </nav>
+      </nav>
+    </header>
   )
 }
 

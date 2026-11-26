@@ -1,78 +1,64 @@
+import { FEATURED_PROJECTS, OTHER_PROJECTS } from '../../data/portfolioData'
+import { ExternalIcon, GitHubIcon } from '../Icons/Icons'
 import './Projects.css'
 
-const projects = [
-  {
-    number: '01',
-    title: 'Hospital Management System',
-    description: 'A full-stack MERN application designed to manage hospital operations including patient registration, doctor appointments, medical records, and billing management. Built with MongoDB, Express.js, React.js, and Node.js to provide efficient workflow management and a responsive user experience.',
-    tech: ['Node js', 'Express js', 'React js', 'MongoDB', 'Material UI'],
-    github: 'https://github.com/Rajakhare/Hospital_Management_System',
-    live: 'https://hospital-management-system-frontend-y28u.onrender.com/',
-    featured: true,
-  },
-  {
-    number: '02',
-    title: 'Weather App',
-    description: 'A real-time weather application that fetches live weather data based on your location or any searched city. Displays temperature, humidity, wind speed and a 5-day forecast using OpenWeather API.',
-    tech: ['React', 'OpenWeather API', 'JavaScript', 'CSS3'],
-    github: 'https://github.com/Rajakhare/Weatherapp',
-    live: 'https://rajakhare.github.io/Weatherapp/',
-    featured: false,
-  },
-  {
-    number: '03',
-    title: 'Python Automation Script - Job Application Tracker',
-    description: 'A real-time weather application that fetches live weather data based on your location or any searched city. Displays temperature, humidity, wind speed and a 5-day forecast using OpenWeather API.',
-    tech: ['Python', 'OOPS', 'smtplib', 'Automation'],
-    github: 'https://github.com/Rajakhare/CLI_tool',
-    featured: false,
-  },
-   
-  {
-    number: '04',
-    title: 'Frontend Project',
-    description: 'A fully responsive startup landing page built from scratch using HTML, CSS, JavaScript and Bootstrap. Features a modern UI with smooth animations, mobile-first design, interactive navigation and clean section layouts — showcasing real-world frontend development skills.',
-    tech: ['HTML', 'CSS', 'JavaScript', 'Bootstrap'],
-    github: 'https://github.com/Rajakhare/Startup_Idea_Project',
-    live: 'https://rajakhare.github.io/Startup_Idea_Project/',
-    featured: false,
-  },
-  {
-    number: '05',
-    title: 'Calculator',
-    description: 'A clean and responsive calculator app supporting basic arithmetic operations. Built with a focus on smooth UI interactions, keyboard support and accurate expression evaluation.',
-    tech: ['React js','JavaScript', 'CSS3'],
-    github: 'https://github.com/Rajakhare/Calculator',
-    live: 'https://rajakhare.github.io/Calculator/',
-    featured: false,
-  },
-  {
-    number: '06',
-    title: 'To Do List',
-    description: 'A feature-rich task management app where each task includes a title, priority level, category and due date. Supports filtering, marking complete and deleting tasks to keep you organized.',
-    tech: ['React', 'JavaScript', 'CSS3'],
-    github: 'https://github.com/Rajakhare/To_Do_List',
-    live: 'https://rajakhare.github.io/To_Do_List/',
-    featured: false,
-  },
-  {
-    number: '07',
-    title: 'StopWatch',
-    description: 'A precise and minimal stopwatch application with start, stop, reset and lap recording functionality. Displays hours, minutes, seconds and milliseconds in a clean real-time interface.',
-    tech: ['React', 'JavaScript', 'CSS3'],
-    github: 'https://github.com/Rajakhare/Stopwatch',
-    live: 'https://rajakhare.github.io/Stopwatch/',
-    featured: false,
-  },
-]
+const ArchitectureDiagram = ({ type }) => {
+  if (type === 'architecture') {
+    const layers = [
+      { label: 'Client / Swagger', detail: 'OpenAPI · HTTPS' },
+      { label: 'Middleware & Routers', detail: 'Tracing · Validation' },
+      { label: 'Service Layer & Auth', detail: 'JWT · Argon2id · RBAC' },
+      { label: 'Async PostgreSQL', detail: 'SQLAlchemy 2.0 · Alembic' },
+    ]
+    return (
+      <div className="project-diagram" aria-label="TaskFlow API layered architecture overview">
+        <div className="diagram-label">API Architecture</div>
+        <div className="diagram-flow">
+          {layers.map((layer, idx) => (
+            <div className="diagram-step-wrap" key={layer.label}>
+              <div className="diagram-node">
+                <span className="diagram-node-title">{layer.label}</span>
+                <span className="diagram-node-sub">{layer.detail}</span>
+              </div>
+              {idx < layers.length - 1 && (
+                <span className="diagram-arrow" aria-hidden="true">
+                  →
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
 
-const GitHubIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-)
-
-const ExternalIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-)
+  const modules = [
+    { label: 'React Client', detail: 'Protected Routes · UI' },
+    { label: 'JWT & RBAC', detail: 'Admin · Doctor · Patient' },
+    { label: 'Express REST API', detail: 'Node.js · Workflows' },
+    { label: 'MongoDB', detail: 'Records · Appointments' },
+  ]
+  return (
+    <div className="project-diagram" aria-label="Hospital Management System architecture overview">
+      <div className="diagram-label">System Flow</div>
+      <div className="diagram-flow">
+        {modules.map((mod, idx) => (
+          <div className="diagram-step-wrap" key={mod.label}>
+            <div className="diagram-node">
+              <span className="diagram-node-title">{mod.label}</span>
+              <span className="diagram-node-sub">{mod.detail}</span>
+            </div>
+            {idx < modules.length - 1 && (
+              <span className="diagram-arrow" aria-hidden="true">
+                →
+              </span>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 const Projects = () => {
   return (
@@ -81,39 +67,120 @@ const Projects = () => {
         <div className="projects-header">
           <div className="section-tag">// projects</div>
           <h2 className="section-heading">
-            Things I've <span>Built</span>
+            Featured <span>Engineering Work</span>
           </h2>
           <p className="section-sub">
-            A collection of projects I've worked on. Each one taught me something new.
+            Personal backend and full-stack projects focused on clean architecture, authentication, and database design.
           </p>
         </div>
 
-        <div className="projects-grid">
-          {projects.map(project => (
-            <div className={`project-card ${project.featured ? 'featured' : ''}`} key={project.number}>
-              <div className="project-top">
-                <span className="project-number">{project.number}</span>
-                <div className="project-links">
-                  <a href={project.github} target="_blank" rel="noreferrer" className="project-link-btn" title="GitHub">
-                    <GitHubIcon />
-                  </a>
-                  <a href={project.live} target="_blank" rel="noreferrer" className="project-link-btn" title="Live Demo">
-                    <ExternalIcon />
-                  </a>
+        <div className="featured-projects-list">
+          {FEATURED_PROJECTS.map((project) => (
+            <article className="featured-project-card" key={project.number}>
+              <div className="project-card-header">
+                <div className="project-meta-left">
+                  <span className="project-number">{project.number}</span>
+                  <span className="project-category">{project.category}</span>
+                  {project.status && (
+                    <span className="project-status-badge">{project.status}</span>
+                  )}
                 </div>
+
+                {(project.github || project.live) && (
+                  <div className="project-links">
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project-action-link"
+                        aria-label={`${project.title} GitHub repository`}
+                      >
+                        <GitHubIcon size={16} />
+                        <span>Code</span>
+                      </a>
+                    )}
+                    {project.live && (
+                      <a
+                        href={project.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project-action-link primary"
+                        aria-label={`${project.title} live demo`}
+                      >
+                        <ExternalIcon size={16} />
+                        <span>Live Demo</span>
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
 
-              <h3 className="project-title">{project.title}</h3>
-              <p className="project-desc">{project.description}</p>
+              <h3 className="featured-project-title">{project.title}</h3>
+              <p className="featured-project-desc">{project.description}</p>
 
-              <div className="project-tech">
-                {project.tech.map(t => (
-                  <span className="tech-tag" key={t}>{t}</span>
+              <ArchitectureDiagram type={project.visualType} />
+
+              <div className="project-highlights-wrap">
+                <h4 className="project-highlights-heading">Key Engineering Highlights</h4>
+                <ul className="project-highlights-list">
+                  {project.highlights.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+
+              {project.note && <p className="project-dev-note">{project.note}</p>}
+
+              <div className="project-tech" aria-label="Technology stack">
+                {project.tech.map((tech) => (
+                  <span className="tech-tag" key={tech}>
+                    {tech}
+                  </span>
                 ))}
               </div>
-            </div>
+            </article>
           ))}
         </div>
+
+        {OTHER_PROJECTS.length > 0 && (
+          <div className="other-projects-section">
+            <h3 className="other-projects-heading">Additional Engineering Project</h3>
+            <div className="other-projects-grid">
+              {OTHER_PROJECTS.map((project) => (
+                <article className="other-project-card" key={project.number}>
+                  <div className="project-card-header">
+                    <div className="project-meta-left">
+                      <span className="project-number">{project.number}</span>
+                      <span className="project-category">{project.category}</span>
+                    </div>
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project-action-link"
+                        aria-label={`${project.title} GitHub repository`}
+                      >
+                        <GitHubIcon size={16} />
+                        <span>Code</span>
+                      </a>
+                    )}
+                  </div>
+                  <h4 className="other-project-title">{project.title}</h4>
+                  <p className="other-project-desc">{project.description}</p>
+                  <div className="project-tech">
+                    {project.tech.map((tech) => (
+                      <span className="tech-tag" key={tech}>
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   )
